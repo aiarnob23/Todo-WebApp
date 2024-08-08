@@ -7,17 +7,18 @@ import { authRoutes } from "./app/modules/auth/auth.route";
 import cookieParser from "cookie-parser";
 
 
-
-
 const app: Application = express();
 app.use(cookieParser());
 app.use(express.json());
+// Use the cors middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
-    credentials:true,
+    origin: "https://todo-webapp-3e29e.web.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
   })
 );
+
 
 app.use("/api/todo", TodoRoutes);
 app.use("/api/user", UserRoutes);

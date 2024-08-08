@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const todoInstance = axios.create({
-  baseURL: "http://localhost:4000/api/",
+  baseURL: "https://todo-web-backend-lyart.vercel.app/api/",
   withCredentials: true,
 });

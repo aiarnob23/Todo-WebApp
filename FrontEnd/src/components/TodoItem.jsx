@@ -1,10 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { softDeleteTodo } from "../utils/deleteTodo";
 import { updateTodoStatus } from "../utils/updateTodoStatus";
+import Swal from "sweetalert2";
 
 const TodoItem = ({ todoItems }) => {
   const location = useLocation();
   const isCompletedPage = location.pathname == "/completed-todos";
+
+  const handleDescriptionVisual = (description) => {
+    Swal.fire(description);
+  }
 
   return (
     <div>
@@ -12,7 +17,7 @@ const TodoItem = ({ todoItems }) => {
         {/* table head */}
         <thead>
           <tr>
-            <td>Index</td>
+            <td className="hidden md:flex">Index</td>
             <th>Date</th>
             <th>Title</th>
             <th>Status</th>
@@ -27,14 +32,17 @@ const TodoItem = ({ todoItems }) => {
               <td
                 className="text-gray-600 font-medium text-base "
                 title={todo.description}
+                onClick={()=>handleDescriptionVisual(todo.description)}
               >
                 {todo.title}
               </td>
-              <td className="text-gray-600">{todo.status}</td>
+              <td className="text-gray-600 font-medium text-base">
+                {todo.status}
+              </td>
               {!isCompletedPage && (
                 <td>
                   <button
-                    className="text-gray-500"
+                    className="text-gray-600 btn  font-medium text-xs  md:text-sm"
                     onClick={() => updateTodoStatus(todo._id)}
                   >
                     Mark complete

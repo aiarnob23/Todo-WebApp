@@ -2,15 +2,16 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { createNewUser } from "../utils/create-user";
 import { successAlert } from "../utils/sweetAlerts";
-import { windowLocChange } from "../utils/windowLocationChange";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Register = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setError] = useState("");
-
+ 
+  const navigate = useNavigate();
   const { GoogleSignIn, manualSignUp } = useContext(AuthContext);
 
   //google registration handle
@@ -23,7 +24,9 @@ const Register = () => {
           console.log(user.email, user.displayName);
           await createNewUser(user.displayName, user.email);
           successAlert("Registration is successful");
-          windowLocChange("/");
+            setTimeout(() => {
+              navigate('/');
+            }, 600);
         }
       })
       .catch((error) => {
@@ -42,7 +45,9 @@ const Register = () => {
           console.log(name, email);
           await createNewUser(name, email);
           successAlert("Registration is successful");
-          windowLocChange("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 600);
         }
       })
       .catch((error) => {

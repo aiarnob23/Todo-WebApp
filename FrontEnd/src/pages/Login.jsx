@@ -4,7 +4,6 @@ import { userDetails } from "../utils/getUserDetails";
 import { createNewUser } from "../utils/create-user";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { successAlert } from "../utils/sweetAlerts";
-import { windowLocChange } from "../utils/windowLocationChange";
 
 const Login = () => {
   const location = useLocation();
@@ -22,7 +21,9 @@ const Login = () => {
       .then((userCredential) => {
         console.log(userCredential);
         successAlert("Login is successful");
-        windowLocChange("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 600);
       })
       .catch((error) => {
         setError(error.message);
@@ -34,13 +35,18 @@ const Login = () => {
     await GoogleSignIn()
       .then(async (result) => {
         const data = await userDetails(result.user.email);
+        console.log(data);
         if (data.data.length) {
           successAlert("Login is Successful");
-          windowLocChange("/");
+           setTimeout(() => {
+              navigate('/');
+            }, 600);
         } else {
           createNewUser(result.user.displayName, result.user.email);
           successAlert("Registration is successful");
-          windowLocChange("/");
+           setTimeout(() => {
+              navigate('/');
+            }, 600);
         }
       })
       .catch((error) => {

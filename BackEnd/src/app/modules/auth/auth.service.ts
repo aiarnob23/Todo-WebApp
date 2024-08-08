@@ -4,6 +4,7 @@ import config from '../../config/config';
 
 
 const loginUser = async (payload: TLoginUser) => {
+    console.log('token chaitese from : server');
     //token create and return
     const accessToken =  jwt.sign(
         {payload}, config.secret as string,{expiresIn:'7d'}
