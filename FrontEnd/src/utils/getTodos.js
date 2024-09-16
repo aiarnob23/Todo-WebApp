@@ -1,11 +1,13 @@
 import catchAsync from "./catchAsync";
 import { todoInstance } from "./getAxiosBaseUrl";
+import { getDate } from "./getDate";
 import { getUserId } from "./getUserDetails";
 
 //get email and date based todos
 export const getTodos = catchAsync(async (email, date) => {
+  const formattedDate = getDate(date);
   const userId = await getUserId(email);
-  const response = await todoInstance.get(`todo?id=${userId}&date=${date}`);
+  const response = await todoInstance.get(`todo?id=${userId}&date=${formattedDate}`);
   return response.data.data || [];
 });
 //get all incompleted todos

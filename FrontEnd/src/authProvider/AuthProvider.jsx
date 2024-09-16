@@ -46,13 +46,18 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
       if (currentUser) {
+        console.log(currentUser);
         todoInstance
           .post(
             "auth/loginUser",
             { user: currentUser?.email }
           )
           .then((res) => {
-            console.log(res);
+            const token = res?.data?.data?.token;
+            const user = res?.data?.data?.email?.user;
+            console.log(user);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', user);
           })
           .catch((error) => {
             console.log(error);

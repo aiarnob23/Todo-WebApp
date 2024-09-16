@@ -5,53 +5,69 @@ import Swal from "sweetalert2";
 
 const TodoItem = ({ todoItems }) => {
   const location = useLocation();
-  const isCompletedPage = location.pathname == "/completed-todos";
+  const isCompletedPage = location.pathname === "/completed-todos";
 
   const handleDescriptionVisual = (description) => {
-    Swal.fire(description);
-  }
+    Swal.fire({
+      text: `${description}`,
+      icon: "info",
+      confirmButtonText: "Close",
+      confirmButtonColor: "#4F46E5",
+    });
+  };
 
   return (
-    <div>
-      <table className="table">
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
         {/* table head */}
-        <thead>
+        <thead className="bg-blue-500 text-white">
           <tr>
-            <td className="hidden md:flex">Index</td>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Status</th>
+            <td className="hidden md:table-cell px-4 py-2 text-left">Index</td>
+            <th className="px-4 py-2 text-left">Date</th>
+            <th className="px-4 py-2 text-left">Title</th>
+            <th className="px-4 py-2 text-left">Status</th>
+            {!isCompletedPage && (
+              <th className="px-4 py-2 text-left">Action</th>
+            )}
+            <th className="px-4 py-2 text-left">Delete</th>
           </tr>
         </thead>
         {/* table body */}
         <tbody>
           {todoItems.map((todo, index) => (
-            <tr key={index}>
-              <td className="text-gray-600 hidden md:flex">{index + 1}</td>
-              <td className="text-gray-600">{todo.date}</td>
+            <tr key={index} className="hover:bg-gray-50">
+              <td className="hidden md:table-cell px-4 py-2 text-gray-600 align-middle">
+                {index + 1}
+              </td>
+              <td className="px-4 py-2 text-gray-600 align-middle">
+                {todo.date}
+              </td>
               <td
-                className="text-gray-600 font-medium text-base "
+                className="px-4 py-2 text-gray-600 font-medium cursor-pointer align-middle"
                 title={todo.description}
-                onClick={()=>handleDescriptionVisual(todo.description)}
+                onClick={() => handleDescriptionVisual(todo.description)}
               >
                 {todo.title}
               </td>
-              <td className="text-gray-600 font-medium text-base">
+              <td className="px-4 py-2 text-gray-600 font-medium align-middle">
                 {todo.status}
               </td>
               {!isCompletedPage && (
-                <td>
+                <td className="px-4 py-2 align-middle">
                   <button
-                    className="text-gray-600 btn  font-medium text-xs  md:text-sm"
+                    className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600 transition duration-300"
                     onClick={() => updateTodoStatus(todo._id)}
                   >
-                    Mark complete
+                    Mark Complete
                   </button>
                 </td>
               )}
-              <td>
-                <button onClick={() => softDeleteTodo(todo._id)}>
-                  <i className="fa-solid text-base text-gray-600 fa-trash"></i>
+              <td className="px-4 py-2 align-middle">
+                <button
+                  onClick={() => softDeleteTodo(todo._id)}
+                  className="text-red-500 hover:text-red-600 text-lg"
+                >
+                  <i className="fa-solid fa-trash"></i>
                 </button>
               </td>
             </tr>

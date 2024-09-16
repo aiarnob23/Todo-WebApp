@@ -13,7 +13,8 @@ app.use(express.json());
 // Use the cors middleware
 app.use(
   cors({
-    origin: "https://todo-webapp-3e29e.web.app",
+    //origin: "https://todo-webapp-3e29e.web.app",
+    origin: "http://localhost:5173",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })

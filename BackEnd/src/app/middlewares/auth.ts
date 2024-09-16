@@ -7,9 +7,9 @@ export const verifyToken = async (
   res: Response,
   next: NextFunction
 ) => {
-    const token = req.cookies?.token ||null;
-    const user = req.cookies?.userEmail || null;
-    const email = user?.user || null;
+  const token = req.headers?.authorization || null;
+  const email = req.headers?.user || null;
+
   if (!token || !email) {
     return res.status(401).json({
       success: false,
@@ -23,7 +23,8 @@ export const verifyToken = async (
       token,
       config.secret as string
       ) as jwt.JwtPayload;
-      if (decoded.payload.user == email) {
+    if (decoded.payload.user == email) {
+        console.log('decoded user', decoded.payload);
           next();
       }
   }
