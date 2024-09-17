@@ -3,9 +3,9 @@ const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
 export const todoInstance = axios.create({
-  baseURL: "http://localhost:4000/api/",
+  baseURL: "https://todo-web-backend-lyart.vercel.app/api/",
   headers: {
     Authorization: `${token}`,
-    user:`${user}`,
+    user: `${user}`,
   },
 });
