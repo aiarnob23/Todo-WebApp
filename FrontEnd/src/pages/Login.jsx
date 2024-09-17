@@ -60,8 +60,8 @@ const Login = () => {
 
   // Return body
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-teal-300 to-blue-500">
-      <div className="w-full max-w-md p-8 bg-gray-100 rounded-lg shadow-lg">
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-md p-8 bg-gray-100 rounded-lg shadow-2xl shadow-gray-500">
         <h1 className="text-center text-3xl font-bold text-gray-800 mb-6">
           Todo Web App
         </h1>
@@ -120,7 +120,15 @@ const Login = () => {
           onClick={googleSignIn}
         >
           <FaGoogle className="mr-2 text-2xl" />
-          Sign in with Google
+          Sign in with
+          <span className="ml-1 text-xl" style={{ color: "#4285F4" }}>
+            G
+          </span>
+          <span className="text-xl" style={{ color: "#EA4335" }}>o</span>
+          <span className="text-xl" style={{ color: "#FBBC05" }}>o</span>
+          <span className="text-xl" style={{ color: "#4285F4" }}>g</span>
+          <span className="text-xl" style={{ color: "#34A853" }}>l</span>
+          <span className="text-xl" style={{ color: "#EA4335" }}>e</span>
         </button>
       </div>
     </div>

@@ -1,0 +1,5 @@
+#navs a.active {
+  color: white;
+  font-size: 16px;
+  background-color: #1D4ED8;
+}

@@ -16,7 +16,6 @@ const Register = () => {
   const navigate = useNavigate();
   const { GoogleSignIn, manualSignUp } = useContext(AuthContext);
 
-  // Google registration handle
   const GRegistration = async () => {
     setError("");
     await GoogleSignIn()
@@ -36,7 +35,6 @@ const Register = () => {
       });
   };
 
-  // Manual registration handle
   const manualRegistration = async (e) => {
     e.preventDefault();
     setError("");
@@ -46,17 +44,15 @@ const Register = () => {
         if (user) {
           console.log(name, email);
 
-          // Update the user's profile with the displayName
           await updateProfile(user, {
             displayName: name,
           });
 
-          // Create a new user in your database
           await createNewUser(name, email);
 
           successAlert("Registration is successful");
           setTimeout(() => {
-            navigate("/");
+            navigate("/login");
           }, 600);
         }
       })
@@ -65,10 +61,27 @@ const Register = () => {
       });
   };
 
-  // Return body
+  // Function to split text into characters for animation, including spaces
+  const renderAnimatedText = (text) => {
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block ${
+          index % 2 === 0 ? "animate-pulse-up" : "animate-pulse-down"
+        }`}
+        style={{ display: "inline-block", whiteSpace: "pre" }}
+      >
+        {char}
+      </span>
+    ));
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-100 to-blue-200 p-5">
-      <div className="w-full max-w-md bg-gray-50 rounded-lg shadow-lg shadow-gray-400 p-8">
+    <div className="flex flex-col justify-center items-center h-screen  bg-[#f7f7f7] p-5 ">
+      <h1 className="text-5xl font-extrabold text-gray-800 mb-8 animate-fade-in">
+        {renderAnimatedText("Empower Your Goals")}
+      </h1>
+      <div className="w-full max-w-md bg-gray-50 rounded-lg shadow-lg shadow-gray-500 p-8 animate-fade-in">
         <h1 className="text-center text-3xl font-bold text-gray-800 mb-6">
           Create Your Account
         </h1>
@@ -134,7 +147,25 @@ const Register = () => {
           onClick={GRegistration}
         >
           <FaGoogle className="mr-2 text-2xl" />
-          Register with Google
+          Register with
+          <span className="ml-1 text-xl" style={{ color: "#4285F4" }}>
+            G
+          </span>
+          <span className="text-xl" style={{ color: "#EA4335" }}>
+            o
+          </span>
+          <span className="text-xl" style={{ color: "#FBBC05" }}>
+            o
+          </span>
+          <span className="text-xl" style={{ color: "#4285F4" }}>
+            g
+          </span>
+          <span className="text-xl" style={{ color: "#34A853" }}>
+            l
+          </span>
+          <span className="text-xl" style={{ color: "#EA4335" }}>
+            e
+          </span>
         </button>
       </div>
     </div>

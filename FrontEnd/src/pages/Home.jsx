@@ -3,7 +3,6 @@ import "react-calendar/dist/Calendar.css";
 import { useContext, useEffect, useState } from "react";
 import { getDate } from "../utils/getDate";
 import { getTodos } from "../utils/getTodos";
-import TodoItem from "../components/TodoItem";
 import { addNewTodo } from "../utils/addTodo";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { softDeleteTodo } from "../utils/deleteTodo";
@@ -17,8 +16,10 @@ const Home = () => {
   const [newTodoDate, setNewTodoDate] = useState("");
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
+    setMessage("");
     if (user?.email && date instanceof Date && !isNaN(date)) {
       setLoading(true);
       const fetchTodos = async () => {
@@ -32,15 +33,20 @@ const Home = () => {
 
   const handleAddTodo = async (e) => {
     e.preventDefault();
+    setMessage("");
     const email = user?.email || "";
     const res = await addNewTodo(email, title, description, newTodoDate);
     if (res) {
+      setMessage("Task added successfully");
       setTitle("");
       setDescription("");
       if (date instanceof Date && !isNaN(date)) {
         const updatedTodos = await getTodos(email, date);
         setTodos(updatedTodos);
       }
+    }
+    else {
+      setMessage("Task added failed.");
     }
   };
 
@@ -113,13 +119,18 @@ const Home = () => {
               Add Todo
             </button>
           </form>
+          <div className="text-start">
+            {message && (
+              <p className="text-xl text-gray-600 font-semibold my-2">
+                {message}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Todos Section */}
         <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 lg:w-2/3">
-          {" "}
-          {/* Adjust width here */}
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          <h2 className="text-2xl font-semibold text-blue-700 mb-4">
             Tasks for: {date.toDateString()}
           </h2>
           {loading ? (
@@ -132,7 +143,7 @@ const Home = () => {
                 todos.map((todo) => (
                   <div
                     key={todo._id}
-                    className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center"
+                    className="bg-gray-50 p-4 rounded-lg shadow-sm border-2 shadow-slate-100 flex justify-between items-center"
                   >
                     <div>
                       <h3 className="font-semibold text-gray-800">
@@ -159,9 +170,17 @@ const Home = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500">
-                  No Todos for {date.toDateString()}
-                </p>
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    src="/no-todos.png" 
+                    alt="No tasks"
+                    className="h-32 w-32 mb-4"
+                  />
+                  <p className="text-gray-500 text-lg">
+                    No tasks for {date.toDateString()}
+                  </p>
+                  <p className="text-gray-400 mt-2">Why not add one?</p>
+                </div>
               )}
             </div>
           )}

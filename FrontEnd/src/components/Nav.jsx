@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../authProvider/AuthProvider";
+import "../components/Nav.css";
 
 const Nav = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -60,6 +61,7 @@ const Nav = () => {
             </div>
             <ul
               tabIndex={0}
+              id="navs"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
              {NavLinks}
@@ -68,7 +70,7 @@ const Nav = () => {
           <a className="btn btn-ghost text-xl">{user && user.displayName}</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu space-x-2 menu-horizontal px-1">
+          <ul id="navs" className="menu space-x-2 menu-horizontal px-1">
            {NavLinks}
           </ul>
         </div>
